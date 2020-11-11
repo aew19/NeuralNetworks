@@ -186,31 +186,6 @@ def j2Loss(output, x):
     loss = np.square(np.subtract(output,x)).mean() 
     return loss
 
-#Grayscale Image Plotter for the hidden nerons
-#Takes in 20 x values
-def grayScaleImage(x, hiddenSize):
-    figure,axis = plt.subplots(nrows = 4, ncols = 5, figsize=(12,7))
-    #Size based on hidden neuron size
-    sizing = int(np.sqrt(hiddenSize))
-    width,height = sizing, sizing
-    interations = 0
-    for val in axis.flat:
-        xCounter = 0
-        grid = [[0 for x in range(width)] for y in range(height)]
-        for i in range(sizing):
-            for j in range(sizing):
-                if x[interations][xCounter][0] == 0.:
-                    grid[j][i] = 0
-                else: 
-                    grid[j][i] = x[interations][xCounter][0]
-                xCounter += 1
-        interations += 1
-        color = plt.cm.get_cmap("Greys")
-        newColor = color.reversed()
-        val.imshow(grid,cmap = newColor)
-    plt.tight_layout()
-    plt.show()
-
 #Grayscale Image Plotter to compare the input and the output
 def TestgrayScaleImage(inputT, output):
     figure,axis = plt.subplots(nrows = 2, ncols = 8, figsize=(12,7))
@@ -237,7 +212,6 @@ def TestgrayScaleImage(inputT, output):
         color = plt.cm.get_cmap("Greys")
         newColor = color.reversed()
         val.imshow(grid,cmap = newColor)
-        val.set_title('HiddenLayer')
 
     plt.tight_layout()
     plt.show()
@@ -333,11 +307,3 @@ for i in range(8):
     
 TestgrayScaleImage(inputT,output)
     
-hiddenNeurons = []
-for i in range(20):
-    numb = random.randint(0, 999)
-    curX = testSet[numb][0]
-    activations = NN.forward(curX)
-    hiddenNeurons.append(activations[-2])
-
-grayScaleImage(hiddenNeurons, numberHN)
